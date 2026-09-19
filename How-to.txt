@@ -1,0 +1,91 @@
+Not fully up to date with the new Tormbot 3.0 bot, but mostly up to date.
+These instructions might not be fully up to date, double check links provided that they are up to date and safe!
+======================================================
+                    Tormbot 2.0
+                  SETUP & USER GUIDE
+======================================================
+
+Welcome to your new Twitch bot! This guide will walk you through exactly how to set up the bot, connect it to your channel, and use all of its features. Even if you have zero technical experience, just follow these steps one by one.
+
+------------------------------------------------------
+PART 1: GETTING YOUR TWITCH CREDENTIALS (CLIENT ID & SECRET)
+------------------------------------------------------
+To safely connect to Twitch, you need to register the bot as an official developer "App."
+
+1. Log in to the Twitch Developer Console at https://dev.twitch.tv/console. 
+2. Click the "Applications" tab and click the "Register Your Application" button.
+3. Fill out the form:
+   * Name: Give it a unique name (e.g., "MyAwesomeChannelBot").
+   * OAuth Redirect URLs: Type exactly "https://twitchtokengenerator.com". Click "Add".
+   * Category: Select "Chat Bot".
+   * Click the "I'm not a robot" checkbox and click "Create".
+4. Locate your new app in the list and click "Manage".
+5. Copy the "Client ID". Paste this somewhere safe (like a blank notepad).
+6. Click "New Secret" to generate a Client Secret. Copy this and keep it completely secret. 
+
+------------------------------------------------------
+PART 2: GENERATING YOUR OAUTH TOKEN (THE 5 SCOPES)
+------------------------------------------------------
+Now we need to give your bot the keys (permissions) to read your chat and moderate your stream.
+
+1. Go to the website: https://twitchtokengenerator.com/.
+2. Scroll down until you see the section labeled "Use My Client Secret and Client ID Optional". Paste the Client ID and Client Secret you just generated.
+3. Scroll back up and click the "Custom Scope Token" option.
+4. You must manually check EXACTLY these 5 permission scopes in the list:
+   * chat:read (Allows the bot to see chat messages)
+   * chat:edit (Allows the bot to type in chat)
+   * moderator:read:chatters (Allows the bot to see who is watching for passive points)
+   * moderator:read:followers (Allows the bot to announce new followers)
+   * moderator:manage:banned_users (Allows the Auto-Mod to timeout/ban bad words)
+5. Scroll down and click the "Generate Token!" button. 
+6. Twitch will ask you to Authorize the app. Click "Authorize".
+7. Copy the "Access Token" that appears on the screen. 
+
+------------------------------------------------------
+PART 3: INITIALIZING THE BOT
+------------------------------------------------------
+1. Double-click `Main.py` to launch the bot interface.
+2. Go to the "Settings" tab.
+3. Paste in your Client ID, Client Secret, and the Access Token you just generated.
+4. Type your exact Twitch Channel name into the "Channel" box.
+5. Click "Save Config". 
+6. Go back to the "Dashboard" tab and click "START BOT". If everything is correct, the text box will say "Bot Online"!
+
+------------------------------------------------------
+PART 4: HOW TO USE THE BOT'S FEATURES (THE TABS)
+------------------------------------------------------
+
+[Dashboard Tab]
+This is your main control center. Once the bot is started, you will see a live feed of your Twitch chat here. 
+* Right-Click Moderation: If you see a bad message, you can right-click the user's name directly in this window to quickly hit them with a 10-minute Timeout or a permanent Ban.
+
+[Events Tab]
+This tab lets the bot automatically thank people for supporting the stream.
+* You can write custom messages for when someone sends Bits, Subs, Redeems Points, or Follows.
+* Variables: Use `{user}` to automatically insert their name, and `{amount}` for the bits total.
+* Sound Alerts: Click the "Sound" button to pick an audio file (.mp3 or .wav) from your computer that will play out loud whenever that event happens.
+
+[Auto-Mod Tab]
+Keep your chat safe from spammers and bots.
+* Add words or phrases (like "buy followers") to the list.
+* Set the action to either "timeout" or "ban". 
+* If anyone types that phrase in your chat, the bot will instantly delete their message, punish them, and log it in red on your Dashboard so you know it happened.
+
+[Commands Tab]
+Create custom text commands for your viewers.
+* Trigger: What the user types (e.g., "!discord").
+* Response: What the bot replies with.
+* Variables: You can use `{user}` (the person who typed it) and `{points}` (to show them their current point balance).
+* Sounds: You can also attach sound files to specific commands!
+
+[Points Tab]
+A built-in loyalty system to reward your viewers for hanging out!
+* Points per message: How many points someone gets just for chatting.
+* Passive amount & interval: How many points the bot gives out on a timer to everyone currently watching the stream (even if they are just lurking).
+* Manage Points: You can manually add or subtract points from a specific user here.
+
+[Charity Tab]
+Run a charity stream where viewers earn money for a cause just by watching and chatting!
+* Automation: Set a dollar amount raised per chat message, or per viewer every X seconds. 
+* Ignored Users: Add bots (like Nightbot or StreamElements) to this list so they don't accidentally generate fake charity money!
+* Auto-Saving: The bot automatically saves your total to a `charity_total.txt` file (which you can pull directly into your OBS overlay as a text source!) and logs the session breakdown to a text file automatically based on the timer you set.
